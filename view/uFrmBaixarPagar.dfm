@@ -204,6 +204,7 @@ object frmBaixarPagar: TfrmBaixarPagar
       Height = 25
       Caption = 'Baixar'
       TabOrder = 2
+      OnClick = btnBaixarClick
     end
   end
 end

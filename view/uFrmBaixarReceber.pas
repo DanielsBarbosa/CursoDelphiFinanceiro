@@ -27,6 +27,7 @@ type
     btnBaixar: TBitBtn;
     procedure FormKeyPress(Sender: TObject; var Key: Char);
     procedure FormShow(Sender: TObject);
+    procedure btnBaixarClick(Sender: TObject);
   private
     fValorParcela : Currency;
     fValorAbatido : Currency;
@@ -42,14 +43,67 @@ var
 implementation
 
 uses
-  Data.SqlExpr, uDmDados;
+  Data.SqlExpr, uDmDados, uFuncoes;
 
 {$R *.dfm}
 
+procedure TfrmBaixarReceber.btnBaixarClick(Sender: TObject);
+begin
+  //validações
+  if (edtValor.Text = '') or (StringParaFloat(edtValor.Text) = 0) then
+  begin
+    Application.MessageBox('Informe o valor a receber.','Atenção',48);
+    edtValor.SetFocus;
+    Abort;
+  end;
+
+  try
+    DmDados.cdsContas_receber.Close;
+    DmDados.cdsContas_receber.CommandText := 'select * from contas_receber where id = '+inttostr(fid);
+    DmDados.cdsContas_receber.Open;
+    DmDados.cdsContas_receber.Edit;
+    DmDados.cdsContas_recebervlr_abatido.AsCurrency := DmDados.cdsContas_recebervlr_abatido.AsCurrency
+                                                       + StringParaFloat(edtValor.Text);
+
+    if DmDados.cdsContas_recebervlr_abatido.AsCurrency >=
+       DmDados.cdsContas_recebervlr_parcela.AsCurrency then
+    begin
+      DmDados.cdsContas_receberstatus.AsString := 'B';
+      DmDados.cdsContas_receberdt_pagamento.AsDateTime := date;
+    end;
+
+    DmDados.cdsContas_receber.Post;
+    DmDados.cdsContas_receber.ApplyUpdates(0);
+    DmDados.cdsContas_receber.Close;
+
+    //Histórico
+    DmDados.cdsReceber_detalhes.Close;
+    DmDados.cdsReceber_detalhes.Open;
+    DmDados.cdsReceber_detalhes.Insert;
+    DmDados.cdsReceber_detalhesid.AsInteger         := GetId('ID','RECEBER_DETALHES');
+    DmDados.cdsReceber_detalhesid_receber.AsInteger := fid;
+    DmDados.cdsReceber_detalhesdetalhes.AsString    := edtObservacao.Text;
+    DmDados.cdsReceber_detalhesvalor.AsCurrency     := StringParaFloat(edtValor.Text);
+    DmDados.cdsReceber_detalhesdata.AsDateTime      := date;
+    DmDados.cdsReceber_detalhesusuario.AsString     := 'SISTEMA';
+    DmDados.cdsReceber_detalhes.Post;
+    DmDados.cdsReceber_detalhes.ApplyUpdates(0);
+
+    Application.MessageBox('Baixa efetuada com sucesso!','Informação',64);
+    ModalResult := mrOk;
+  except on E: Exception do
+    begin
+      DmDados.cdsContas_receber.CancelUpdates;
+      DmDados.cdsReceber_detalhes.CancelUpdates;
+      raise Exception.Create('Erro ao efetuar baixa: '+E.Message);
+    end;
+  end;
+end;
+
 procedure TfrmBaixarReceber.FormKeyPress(Sender: TObject; var Key: Char);
 begin
-  if KEY = #27 then
-    Close;
+  FechaFormEsc(key,self);
+  EnterporTab(key,self);
 end;
 
 procedure TfrmBaixarReceber.FormShow(Sender: TObject);

@@ -24,7 +24,9 @@ uses
   uGetConexao in 'classes\uGetConexao.pas',
   uSQL in 'classes\uSQL.pas',
   uFrmSaldoCaixa in 'view\uFrmSaldoCaixa.pas' {frmSaldoCaixa},
-  uCaixa in 'classes\uCaixa.pas';
+  uCaixa in 'classes\uCaixa.pas',
+  uFrmDetalhesReceber in 'view\uFrmDetalhesReceber.pas' {frmDetalhesReceber},
+  uFrmDetalhesPagar in 'view\uFrmDetalhesPagar.pas' {frmDetalhesPagar};
 
 {$R *.res}
 
@@ -33,6 +35,5 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TDmDados, DmDados);
   Application.CreateForm(TfrmPrincipal, frmPrincipal);
-  Application.CreateForm(TfrmSaldoCaixa, frmSaldoCaixa);
   Application.Run;
 end.

@@ -5,7 +5,8 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.Grids,
-  Vcl.DBGrids, Vcl.ComCtrls, tpEdit, Vcl.ExtCtrls, Data.DB, Datasnap.DBClient, StrUtils;
+  Vcl.DBGrids, Vcl.ComCtrls, tpEdit, Vcl.ExtCtrls, Data.DB, Datasnap.DBClient, StrUtils,
+  Vcl.Menus;
 
 type
   TfrmConsReceber = class(TForm)
@@ -45,6 +46,8 @@ type
     Label5: TLabel;
     cdsConsultaTotal: TAggregateField;
     btnBaixar: TBitBtn;
+    PopupMenu1: TPopupMenu;
+    Visualizarhistrico1: TMenuItem;
     procedure BitBtn2Click(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure SpeedButton1Click(Sender: TObject);
@@ -52,6 +55,8 @@ type
     procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
     procedure btnBaixarClick(Sender: TObject);
+    procedure Visualizarhistrico1Click(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
   private
     procedure Pesquisar;
     { Private declarations }
@@ -66,13 +71,19 @@ implementation
 
 {$R *.dfm}
 
-uses uDmDados, uFuncoes, uFrmBaixarReceber;
+uses uDmDados, uFuncoes, uFrmBaixarReceber, uFrmDetalhesReceber;
 
 procedure TfrmConsReceber.btnBaixarClick(Sender: TObject);
 begin
-  if (cdsConsultastatus.AsString = 'B') or (cdsConsultastatus.AsString = 'C') then
+  if (cdsConsultastatus.AsString = 'B') then
   begin
-    Application.MessageBox('Não é possível baixar um documento cancelado ou baixado.','AtençãO',MB_OK+MB_ICONWARNING);
+    Application.MessageBox('Não é possível baixar um documento baixado.','AtençãO',MB_OK+MB_ICONWARNING);
+    abort;
+  end;
+
+  if (cdsConsultastatus.AsString = 'C') then
+  begin
+    Application.MessageBox('Não é possível baixar um documento cancelado.','AtençãO',MB_OK+MB_ICONWARNING);
     abort;
   end;
 
@@ -80,6 +91,8 @@ begin
   try
     frmBaixarReceber.fId := cdsConsultaid.AsInteger;
     frmBaixarReceber.ShowModal;
+    if frmBaixarReceber.ModalResult = mrOk then
+      cdsConsulta.Refresh;
   finally
     FreeAndNil(frmBaixarReceber);
   end;
@@ -113,6 +126,12 @@ procedure TfrmConsReceber.FormKeyDown(Sender: TObject; var Key: Word;
 begin
   if key = Vk_f2 then
     Pesquisar;
+end;
+
+procedure TfrmConsReceber.FormKeyPress(Sender: TObject; var Key: Char);
+begin
+  EnterporTab(key,self);
+  FechaFormEsc(key,self);
 end;
 
 procedure TfrmConsReceber.Pesquisar;
@@ -185,6 +204,23 @@ end;
 procedure TfrmConsReceber.SpeedButton1Click(Sender: TObject);
 begin
   Pesquisar;
+end;
+
+procedure TfrmConsReceber.Visualizarhistrico1Click(Sender: TObject);
+begin
+  if cdsConsulta.IsEmpty then
+  begin
+    Application.MessageBox('Nenhum documento localizado!','Atenção',48);
+    Abort;
+  end;
+
+  frmDetalhesReceber := TfrmDetalhesReceber.Create(nil);
+  try
+    frmDetalhesReceber.fId := cdsConsultaid.AsInteger;
+    frmDetalhesReceber.ShowModal;
+  finally
+    FreeAndNil(frmDetalhesReceber);
+  end;
 end;
 
 end.

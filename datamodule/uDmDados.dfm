@@ -364,21 +364,26 @@ object DmDados: TDmDados
       Required = True
     end
     object cdsReceber_detalhesdetalhes: TStringField
+      DisplayLabel = 'Detalhes:'
       FieldName = 'detalhes'
       Required = True
       Size = 255
     end
     object cdsReceber_detalhesvalor: TFMTBCDField
+      DisplayLabel = 'Valor:'
       FieldName = 'valor'
       Required = True
+      currency = True
       Precision = 20
       Size = 2
     end
     object cdsReceber_detalhesdata: TDateField
+      DisplayLabel = 'Cadastrado em:'
       FieldName = 'data'
       Required = True
     end
     object cdsReceber_detalhesusuario: TStringField
+      DisplayLabel = 'Cadastrado por:'
       FieldName = 'usuario'
       Required = True
       Size = 50
@@ -413,21 +418,26 @@ object DmDados: TDmDados
       Required = True
     end
     object cdsPagar_detalhesdetalhes: TStringField
+      DisplayLabel = 'Detalhes:'
       FieldName = 'detalhes'
       Required = True
       Size = 255
     end
     object cdsPagar_detalhesvalor: TFMTBCDField
+      DisplayLabel = 'Valor:'
       FieldName = 'valor'
       Required = True
+      currency = True
       Precision = 20
       Size = 2
     end
     object cdsPagar_detalhesdata: TDateField
+      DisplayLabel = 'Cadastrado em:'
       FieldName = 'data'
       Required = True
     end
     object cdsPagar_detalhesusuario: TStringField
+      DisplayLabel = 'Cadastrado por:'
       FieldName = 'usuario'
       Required = True
       Size = 50

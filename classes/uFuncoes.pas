@@ -2,9 +2,8 @@ unit uFuncoes;
 
 interface
 
-  uses Vcl.Forms, System.SysUtils, System.Classes, uDmDados,
-       Data.DB, Data.SqlExpr, Vcl.DBGrids, Vcl.Grids, System.Types,
-  System.Generics.Collections;
+  uses Vcl.Forms, System.SysUtils, System.Classes, uDmDados, Data.DB, Data.SqlExpr,
+       Vcl.DBGrids, Vcl.Grids, System.Types, System.Generics.Collections;
 
   procedure CriarForm(T : TComponentClass ;Form : TForm);
   function  GetId(Campo, Tabela : String) : Integer;
@@ -13,9 +12,13 @@ interface
   function  StringParaFloat(s : string) : Extended;
   function  ReveterData(S: String) : String;
   function  GetInformacoesCaixa() : TList<String>;
-//  procedure FecharForm(Sender: TObject; var Key: Char);
+  procedure FechaFormEsc(var Key : Char; Form : TForm);
+  procedure EnterporTab(var Key : Char; Form : TForm);
 
 implementation
+
+uses
+  Vcl.StdCtrls, Winapi.Messages;
 
 function GetInformacoesCaixa() : TList<String>;
 var
@@ -92,9 +95,6 @@ begin
 end;
 
 function StringParaFloat(s : string) : Extended;
-{ Filtra uma string qualquer, convertendo as suas partes
-  numéricas para sua representação decimal, por exemplo:
-  'R$ 1.200,00' para 1200,00 '1AB34TZ' para 134}
 var
   i :Integer;
   t : string;
@@ -103,9 +103,7 @@ begin
    t := '';
    SeenDecimal := False;
    SeenSgn := False;
-   {Percorre os caracteres da string:}
    for i := Length(s) downto 0 do
-     {Filtra a string, aceitando somente números e separador decimal:}
      if (s[i] in ['0'..'9', '-','+',',']) then
      begin
         if (s[i] = ',') and (not SeenDecimal) then
@@ -124,6 +122,17 @@ begin
         end;
      end;
    Result := StrToFloat(t);
+end;
+
+procedure FechaFormEsc(var Key : Char; Form : TForm);
+begin
+  if key = #27 then Form.Close;
+end;
+
+procedure EnterporTab(var Key : Char; Form : TForm);
+begin
+  if not (Form.ActiveControl is TMemo) or (Form.ActiveControl is TDBGrid) then
+    if key = #13 then Form.Perform(WM_NEXTDLGCTL,0,0);
 end;
 
 end.

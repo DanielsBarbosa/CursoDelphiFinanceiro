@@ -28,6 +28,7 @@ type
     btnBaixar: TBitBtn;
     procedure FormKeyPress(Sender: TObject; var Key: Char);
     procedure FormShow(Sender: TObject);
+    procedure btnBaixarClick(Sender: TObject);
   private
     fValorParcela : Currency;
     fValorAbatido : Currency;
@@ -44,12 +45,65 @@ implementation
 
 {$R *.dfm}
 
-uses uDmDados;
+uses uDmDados, uFuncoes;
+
+procedure TfrmBaixarPagar.btnBaixarClick(Sender: TObject);
+begin
+  //validações
+  if (edtValor.Text = '') or (StringParaFloat(edtValor.Text) = 0) then
+  begin
+    Application.MessageBox('Informe o valor a receber.','Atenção',48);
+    edtValor.SetFocus;
+    Abort;
+  end;
+
+  try
+    DmDados.cdsContas_pagar.Close;
+    DmDados.cdsContas_pagar.CommandText := 'select * from contas_pagar where id = '+inttostr(fid);
+    DmDados.cdsContas_pagar.Open;
+    DmDados.cdsContas_pagar.Edit;
+    DmDados.cdsContas_pagarvlr_abatido.AsCurrency := DmDados.cdsContas_pagarvlr_abatido.AsCurrency
+                                                       + StringParaFloat(edtValor.Text);
+
+    if DmDados.cdsContas_pagarvlr_abatido.AsCurrency >=
+       DmDados.cdsContas_pagarvlr_parcela.AsCurrency then
+    begin
+      DmDados.cdsContas_pagarstatus.AsString := 'B';
+      DmDados.cdsContas_pagardt_pagamento.AsDateTime := date;
+    end;
+
+    DmDados.cdsContas_pagar.Post;
+    DmDados.cdsContas_pagar.ApplyUpdates(0);
+    DmDados.cdsContas_pagar.Close;
+
+    //Histórico
+    DmDados.cdsPagar_detalhes.Close;
+    DmDados.cdsPagar_detalhes.Open;
+    DmDados.cdsPagar_detalhes.Insert;
+    DmDados.cdsPagar_detalhesid.AsInteger         := GetId('ID','PAGAR_DETALHES');
+    DmDados.cdsPagar_detalhesid_pagar.AsInteger := fid;
+    DmDados.cdsPagar_detalhesdetalhes.AsString    := edtObservacao.Text;
+    DmDados.cdsPagar_detalhesvalor.AsCurrency     := StringParaFloat(edtValor.Text);
+    DmDados.cdsPagar_detalhesdata.AsDateTime      := date;
+    DmDados.cdsPagar_detalhesusuario.AsString     := 'SISTEMA';
+    DmDados.cdsPagar_detalhes.Post;
+    DmDados.cdsPagar_detalhes.ApplyUpdates(0);
+
+    Application.MessageBox('Baixa efetuada com sucesso!','Informação',64);
+    ModalResult := mrOk;
+  except on E: Exception do
+    begin
+      DmDados.cdsContas_pagar.CancelUpdates;
+      DmDados.cdsPagar_detalhes.CancelUpdates;
+      raise Exception.Create('Erro ao efetuar baixa: '+E.Message);
+    end;
+  end;
+end;
 
 procedure TfrmBaixarPagar.FormKeyPress(Sender: TObject; var Key: Char);
 begin
-  if KEY = #27 then
-    Close;
+  FechaFormEsc(key,self);
+  EnterporTab(key,self);
 end;
 
 procedure TfrmBaixarPagar.FormShow(Sender: TObject);

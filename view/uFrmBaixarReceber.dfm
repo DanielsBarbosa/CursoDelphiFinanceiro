@@ -67,7 +67,7 @@ object frmBaixarReceber: TfrmBaixarReceber
     object lblParcela: TLabel
       Left = 95
       Top = 43
-      Width = 213
+      Width = 102
       Height = 18
       Caption = 'lblDocumento'
       Font.Charset = DEFAULT_CHARSET
@@ -93,7 +93,7 @@ object frmBaixarReceber: TfrmBaixarReceber
     object lblVencimento: TLabel
       Left = 95
       Top = 67
-      Width = 213
+      Width = 102
       Height = 18
       Caption = 'lblDocumento'
       Font.Charset = DEFAULT_CHARSET
@@ -106,7 +106,7 @@ object frmBaixarReceber: TfrmBaixarReceber
     object lblVlrParcela: TLabel
       Left = 95
       Top = 91
-      Width = 213
+      Width = 102
       Height = 18
       Caption = 'lblDocumento'
       Font.Charset = DEFAULT_CHARSET
@@ -145,7 +145,7 @@ object frmBaixarReceber: TfrmBaixarReceber
     object lblVlrAbatido: TLabel
       Left = 95
       Top = 115
-      Width = 213
+      Width = 102
       Height = 18
       Caption = 'lblDocumento'
       Font.Charset = DEFAULT_CHARSET
@@ -204,6 +204,7 @@ object frmBaixarReceber: TfrmBaixarReceber
       Height = 25
       Caption = 'Baixar'
       TabOrder = 2
+      OnClick = btnBaixarClick
     end
   end
 end

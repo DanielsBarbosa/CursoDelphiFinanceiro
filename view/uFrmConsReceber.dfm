@@ -15,6 +15,7 @@ object frmConsReceber: TfrmConsReceber
   OldCreateOrder = False
   Position = poScreenCenter
   OnKeyDown = FormKeyDown
+  OnKeyPress = FormKeyPress
   PixelsPerInch = 96
   TextHeight = 13
   object Label5: TLabel
@@ -285,6 +286,7 @@ object frmConsReceber: TfrmConsReceber
       DataSource = dsConsulta
       DrawingStyle = gdsGradient
       Options = [dgTitles, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+      PopupMenu = PopupMenu1
       TabOrder = 1
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = clWindowText
@@ -556,5 +558,13 @@ object frmConsReceber: TfrmConsReceber
     DataSet = cdsConsulta
     Left = 264
     Top = 186
+  end
+  object PopupMenu1: TPopupMenu
+    Left = 488
+    Top = 250
+    object Visualizarhistrico1: TMenuItem
+      Caption = 'Visualizar hist'#243'rico'
+      OnClick = Visualizarhistrico1Click
+    end
   end
 end

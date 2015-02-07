@@ -286,6 +286,7 @@ object frmConsPagar: TfrmConsPagar
       DataSource = dsConsulta
       DrawingStyle = gdsGradient
       Options = [dgTitles, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+      PopupMenu = PopupMenu1
       TabOrder = 1
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = clWindowText
@@ -553,5 +554,13 @@ object frmConsPagar: TfrmConsPagar
     DataSet = cdsConsulta
     Left = 264
     Top = 185
+  end
+  object PopupMenu1: TPopupMenu
+    Left = 424
+    Top = 193
+    object Visualizarhistrico1: TMenuItem
+      Caption = 'Visualizar hist'#243'rico'
+      OnClick = Visualizarhistrico1Click
+    end
   end
 end

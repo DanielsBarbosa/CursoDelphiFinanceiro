@@ -5,7 +5,8 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Datasnap.DBClient, Vcl.Grids,
-  Vcl.DBGrids, Vcl.StdCtrls, tpEdit, Vcl.ExtCtrls, Vcl.Buttons, Vcl.ComCtrls;
+  Vcl.DBGrids, Vcl.StdCtrls, tpEdit, Vcl.ExtCtrls, Vcl.Buttons, Vcl.ComCtrls,
+  Vcl.Menus;
 
 type
   TfrmConsPagar = class(TForm)
@@ -45,6 +46,8 @@ type
     Label5: TLabel;
     cdsConsultaTotal: TAggregateField;
     btnBaixar: TBitBtn;
+    PopupMenu1: TPopupMenu;
+    Visualizarhistrico1: TMenuItem;
     procedure BitBtn2Click(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -53,6 +56,7 @@ type
     procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
     procedure btnBaixarClick(Sender: TObject);
+    procedure Visualizarhistrico1Click(Sender: TObject);
   private
     procedure Pesquisar;
     { Private declarations }
@@ -67,7 +71,7 @@ implementation
 
 {$R *.dfm}
 
-uses uDmDados, uFuncoes, uFrmBaixarPagar;
+uses uDmDados, uFuncoes, uFrmBaixarPagar, uFrmDetalhesPagar;
 
 procedure TfrmConsPagar.BitBtn1Click(Sender: TObject);
 begin
@@ -88,9 +92,15 @@ end;
 
 procedure TfrmConsPagar.btnBaixarClick(Sender: TObject);
 begin
-  if (cdsConsultastatus.AsString = 'B') or (cdsConsultastatus.AsString = 'C') then
+  if (cdsConsultastatus.AsString = 'B') then
   begin
-    Application.MessageBox('Não é possível baixar um documento cancelado ou baixado.','AtençãO',MB_OK+MB_ICONWARNING);
+    Application.MessageBox('Não é possível baixar um documento baixado.','AtençãO',MB_OK+MB_ICONWARNING);
+    abort;
+  end;
+
+  if (cdsConsultastatus.AsString = 'C') then
+  begin
+    Application.MessageBox('Não é possível baixar um documento cancelado.','AtençãO',MB_OK+MB_ICONWARNING);
     abort;
   end;
 
@@ -98,6 +108,8 @@ begin
   try
     frmBaixarPagar.fId := cdsConsultaid.AsInteger;
     frmBaixarPagar.ShowModal;
+    if frmBaixarPagar.ModalResult = mrOk then
+      cdsConsulta.Refresh;
   finally
     FreeAndNil(frmBaixarPagar);
   end;
@@ -118,10 +130,8 @@ end;
 
 procedure TfrmConsPagar.FormKeyPress(Sender: TObject; var Key: Char);
 begin
-  if key = #27 then
-    Close;
-  if key = #13 then
-    Perform(WM_NEXTDLGCTL,0,0);
+  EnterporTab(key,self);
+  FechaFormEsc(key,self);
 end;
 
 procedure TfrmConsPagar.Pesquisar;
@@ -194,6 +204,23 @@ end;
 procedure TfrmConsPagar.SpeedButton1Click(Sender: TObject);
 begin
   Pesquisar;
+end;
+
+procedure TfrmConsPagar.Visualizarhistrico1Click(Sender: TObject);
+begin
+  if cdsConsulta.IsEmpty then
+  begin
+    Application.MessageBox('Nenhum documento localizado!','Atenção',48);
+    Abort;
+  end;
+
+  frmDetalhesPagar := TfrmDetalhesPagar.Create(nil);
+  try
+    frmDetalhesPagar.fId := cdsConsultaid.AsInteger;
+    frmDetalhesPagar.ShowModal;
+  finally
+    FreeAndNil(frmDetalhesPagar);
+  end;
 end;
 
 end.
