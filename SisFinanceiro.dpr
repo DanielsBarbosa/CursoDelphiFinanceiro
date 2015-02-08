@@ -26,7 +26,8 @@ uses
   uFrmSaldoCaixa in 'view\uFrmSaldoCaixa.pas' {frmSaldoCaixa},
   uCaixa in 'classes\uCaixa.pas',
   uFrmDetalhesReceber in 'view\uFrmDetalhesReceber.pas' {frmDetalhesReceber},
-  uFrmDetalhesPagar in 'view\uFrmDetalhesPagar.pas' {frmDetalhesPagar};
+  uFrmDetalhesPagar in 'view\uFrmDetalhesPagar.pas' {frmDetalhesPagar},
+  uFrmEmitirRecibo in 'view\uFrmEmitirRecibo.pas' {frmEmitirRecibo};
 
 {$R *.res}
 

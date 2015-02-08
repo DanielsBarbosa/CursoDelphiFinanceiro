@@ -38,6 +38,7 @@ object DmDados: TDmDados
       'Encrypted=False'
       'BlobSize=-1'
       'ErrorResourceFile=')
+    Connected = True
     Left = 48
     Top = 24
   end
@@ -456,5 +457,108 @@ object DmDados: TDmDados
     SQLConnection = SQLConnection
     Left = 400
     Top = 160
+  end
+  object sdsRecibos: TSQLDataSet
+    CommandText = 'select * from recibos where id = 0'
+    MaxBlobSize = -1
+    Params = <>
+    SQLConnection = SQLConnection
+    Left = 400
+    Top = 240
+  end
+  object dspRecibos: TDataSetProvider
+    DataSet = sdsRecibos
+    Options = [poAllowCommandText, poUseQuoteChar]
+    Left = 512
+    Top = 240
+  end
+  object cdsRecibos: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'dspRecibos'
+    Left = 624
+    Top = 240
+    object cdsRecibosid: TIntegerField
+      DisplayLabel = 'C'#243'digo:'
+      FieldName = 'id'
+      Required = True
+      DisplayFormat = '#000000'
+    end
+    object cdsRecibostipo_recibo: TIntegerField
+      DisplayLabel = 'Tipo de recibo:'
+      FieldName = 'tipo_recibo'
+      Required = True
+    end
+    object cdsRecibosdt_emissao: TDateField
+      DisplayLabel = 'Emitido em:'
+      FieldName = 'dt_emissao'
+      Required = True
+    end
+    object cdsRecibosvlr_recibo: TFMTBCDField
+      DisplayLabel = 'Valor:'
+      FieldName = 'vlr_recibo'
+      Required = True
+      currency = True
+      Precision = 20
+      Size = 2
+    end
+    object cdsRecibosreferente: TStringField
+      DisplayLabel = 'Referente:'
+      FieldName = 'referente'
+      Required = True
+      Size = 100
+    end
+    object cdsRecibosobservacao: TStringField
+      DisplayLabel = 'Observa'#231#227'o:'
+      FieldName = 'observacao'
+      Required = True
+      Size = 255
+    end
+    object cdsRecibosemitente: TStringField
+      DisplayLabel = 'Emitente:'
+      FieldName = 'emitente'
+      Required = True
+      Size = 100
+    end
+    object cdsRecibosendereco: TStringField
+      DisplayLabel = 'Endere'#231'o:'
+      FieldName = 'endereco'
+      Required = True
+      Size = 100
+    end
+    object cdsReciboscpf_cnpj: TStringField
+      DisplayLabel = 'CPF/CNPJ:'
+      FieldName = 'cpf_cnpj'
+      Required = True
+      Size = 30
+    end
+    object cdsReciboscidade: TStringField
+      DisplayLabel = 'Cidade:'
+      FieldName = 'cidade'
+      Required = True
+      Size = 100
+    end
+    object cdsRecibosdt_cadastro: TDateField
+      DisplayLabel = 'Cadastrado em:'
+      FieldName = 'dt_cadastro'
+      Required = True
+    end
+    object cdsReciboshr_cadastro: TTimeField
+      DisplayLabel = 'Hor'#225'rio:'
+      FieldName = 'hr_cadastro'
+      Required = True
+    end
+    object cdsRecibosuser_cadastro: TStringField
+      DisplayLabel = 'Cadastrado por:'
+      FieldName = 'user_cadastro'
+      Required = True
+      Size = 50
+    end
+    object cdsRecibosnome: TStringField
+      DisplayLabel = 'Nome:'
+      FieldName = 'nome'
+      Required = True
+      Size = 100
+    end
   end
 end

@@ -79,6 +79,23 @@ type
     cdsPagar_detalhesvalor: TFMTBCDField;
     cdsPagar_detalhesdata: TDateField;
     cdsPagar_detalhesusuario: TStringField;
+    sdsRecibos: TSQLDataSet;
+    dspRecibos: TDataSetProvider;
+    cdsRecibos: TClientDataSet;
+    cdsRecibosid: TIntegerField;
+    cdsRecibostipo_recibo: TIntegerField;
+    cdsRecibosdt_emissao: TDateField;
+    cdsRecibosvlr_recibo: TFMTBCDField;
+    cdsRecibosreferente: TStringField;
+    cdsRecibosobservacao: TStringField;
+    cdsRecibosemitente: TStringField;
+    cdsRecibosendereco: TStringField;
+    cdsReciboscpf_cnpj: TStringField;
+    cdsReciboscidade: TStringField;
+    cdsRecibosdt_cadastro: TDateField;
+    cdsReciboshr_cadastro: TTimeField;
+    cdsRecibosuser_cadastro: TStringField;
+    cdsRecibosnome: TStringField;
   private
     { Private declarations }
   public

@@ -80,12 +80,12 @@ begin
     DmDados.cdsPagar_detalhes.Close;
     DmDados.cdsPagar_detalhes.Open;
     DmDados.cdsPagar_detalhes.Insert;
-    DmDados.cdsPagar_detalhesid.AsInteger         := GetId('ID','PAGAR_DETALHES');
+    DmDados.cdsPagar_detalhesid.AsInteger       := GetId('ID','PAGAR_DETALHES');
     DmDados.cdsPagar_detalhesid_pagar.AsInteger := fid;
-    DmDados.cdsPagar_detalhesdetalhes.AsString    := edtObservacao.Text;
-    DmDados.cdsPagar_detalhesvalor.AsCurrency     := StringParaFloat(edtValor.Text);
-    DmDados.cdsPagar_detalhesdata.AsDateTime      := date;
-    DmDados.cdsPagar_detalhesusuario.AsString     := 'SISTEMA';
+    DmDados.cdsPagar_detalhesdetalhes.AsString  := edtObservacao.Text;
+    DmDados.cdsPagar_detalhesvalor.AsCurrency   := StringParaFloat(edtValor.Text);
+    DmDados.cdsPagar_detalhesdata.AsDateTime    := date;
+    DmDados.cdsPagar_detalhesusuario.AsString   := 'SISTEMA';
     DmDados.cdsPagar_detalhes.Post;
     DmDados.cdsPagar_detalhes.ApplyUpdates(0);
 
