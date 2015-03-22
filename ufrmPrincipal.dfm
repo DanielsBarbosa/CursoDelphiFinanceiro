@@ -1850,6 +1850,15 @@
     TabOrder = 1
     OnClick = BitBtn1Click
   end
+  object Button1: TButton
+    Left = 696
+    Top = 232
+    Width = 75
+    Height = 57
+    Caption = 'Recibo'
+    TabOrder = 2
+    OnClick = Button1Click
+  end
   object BalloonHint: TBalloonHint
     Left = 552
     Top = 200

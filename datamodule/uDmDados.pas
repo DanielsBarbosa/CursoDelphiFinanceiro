@@ -85,6 +85,7 @@ type
     cdsRecibosid: TIntegerField;
     cdsRecibostipo_recibo: TIntegerField;
     cdsRecibosdt_emissao: TDateField;
+    cdsRecibosnome: TStringField;
     cdsRecibosvlr_recibo: TFMTBCDField;
     cdsRecibosreferente: TStringField;
     cdsRecibosobservacao: TStringField;
@@ -95,7 +96,6 @@ type
     cdsRecibosdt_cadastro: TDateField;
     cdsReciboshr_cadastro: TTimeField;
     cdsRecibosuser_cadastro: TStringField;
-    cdsRecibosnome: TStringField;
   private
     { Private declarations }
   public

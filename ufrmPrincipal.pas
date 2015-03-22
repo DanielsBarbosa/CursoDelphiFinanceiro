@@ -31,6 +31,7 @@ type
     Timer: TTimer;
     sSkinManager1: TsSkinManager;
     BitBtn1: TBitBtn;
+    Button1: TButton;
     procedure TimerTimer(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure imgUsuariosClick(Sender: TObject);
@@ -41,6 +42,7 @@ type
     procedure imgConsPagarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure BitBtn1Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -56,11 +58,16 @@ implementation
 
 uses uFrmCadastroBasico, uFrmCadastroUsuarios, uFuncoes, uFrmCadastroCaixa,
   uFrmCadastroPagar, uFrmCadastroReceber, uFrmConsPagar, uFrmConsReceber,
-  uFrmLogin, uFrmSplash, uFrmSaldoCaixa;
+  uFrmLogin, uFrmSplash, uFrmSaldoCaixa, uFrmEmitirRecibo;
 
 procedure TfrmPrincipal.BitBtn1Click(Sender: TObject);
 begin
   CriarForm(TfrmSaldoCaixa, frmSaldoCaixa);
+end;
+
+procedure TfrmPrincipal.Button1Click(Sender: TObject);
+begin
+  CriarForm(TfrmEmitirRecibo, frmEmitirRecibo);
 end;
 
 procedure TfrmPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);
