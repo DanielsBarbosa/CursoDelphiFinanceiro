@@ -56,7 +56,7 @@ implementation
 
 {$R *.dfm}
 
-uses uFuncoes, uDmDados, uFrmConsRecibos;
+uses uFuncoes, uDmDados, uFrmConsRecibos, uDmRelatorios, System.StrUtils;
 
 procedure TfrmEmitirRecibo.btnCancelarClick(Sender: TObject);
 begin
@@ -146,6 +146,15 @@ begin
 
     DmDados.cdsRecibos.Post;
     DmDados.cdsRecibos.ApplyUpdates(0);
+
+
+    DmRelatorios := TDmRelatorios.Create(nil);
+    try
+      DmRelatorios.ImprimirRecibo(DmDados.cdsRecibosid.AsInteger,DmDados.cdsRecibostipo_recibo.AsInteger);
+    finally
+      FreeAndNil(DmRelatorios);
+    end;
+
     DmDados.cdsRecibos.Close;
 
     Application.MessageBox('Recibo gerado com sucesso!','Informação', 64);

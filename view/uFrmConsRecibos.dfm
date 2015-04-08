@@ -27,6 +27,7 @@ object frmConsRecibos: TfrmConsRecibos
     DataSource = ds
     DrawingStyle = gdsGradient
     Options = [dgTitles, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+    PopupMenu = PopupMenu1
     TabOrder = 0
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
@@ -42,7 +43,8 @@ object frmConsRecibos: TfrmConsRecibos
       end
       item
         Expanded = False
-        FieldName = 'tipo_recibo'
+        FieldName = 'Tipo'
+        Width = 116
         Visible = True
       end
       item
@@ -206,10 +208,23 @@ object frmConsRecibos: TfrmConsRecibos
       Required = True
       Size = 50
     end
+    object cdsTipo: TStringField
+      DisplayLabel = 'Tipo:'
+      FieldName = 'Tipo'
+      Size = 11
+    end
   end
   object ds: TDataSource
     DataSet = cds
     Left = 328
     Top = 128
+  end
+  object PopupMenu1: TPopupMenu
+    Left = 248
+    Top = 64
+    object Imprimir1: TMenuItem
+      Caption = 'Imprimir'
+      OnClick = Imprimir1Click
+    end
   end
 end

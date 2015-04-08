@@ -90,6 +90,10 @@ begin
   TUsuario.CarregarLogin(edtLogin);
   edtLogin.Text           := TSistema.GetUsuarioAcesso;
   lblUltimoAcesso.Caption := TSistema.GetUltimoAcesso;
+
+  {$IFDEF DEBUG}
+    edtSenha.Text := '123123';
+  {$ENDIF}
 end;
 
 end.
