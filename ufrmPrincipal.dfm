@@ -1851,8 +1851,8 @@
     OnClick = BitBtn1Click
   end
   object Button1: TButton
-    Left = 696
-    Top = 232
+    Left = 688
+    Top = 231
     Width = 75
     Height = 57
     Caption = 'Recibo'
