@@ -1870,6 +1870,7 @@
   end
   object sSkinManager1: TsSkinManager
     ExtendedBorders = True
+    Active = False
     InternalSkins = <>
     MenuSupport.IcoLineSkin = 'ICOLINE'
     MenuSupport.ExtraLineFont.Charset = DEFAULT_CHARSET
@@ -1879,7 +1880,7 @@
     MenuSupport.ExtraLineFont.Style = []
     SkinDirectory = 'C:\sisfinanceiro_delphi_mysql\componentes\alpha controls\Skins'
     SkinName = 'WEB2'
-    SkinInfo = '8'
+    SkinInfo = 'N/A'
     ThirdParty.ThirdEdits = 
       'TEdit'#13#10'TMemo'#13#10'THotKey'#13#10'TCheckListBox'#13#10'TCategoryButtons'#13#10'TFileLis' +
       'tBox'#13#10

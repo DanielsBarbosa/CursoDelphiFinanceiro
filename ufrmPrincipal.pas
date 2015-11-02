@@ -58,7 +58,7 @@ implementation
 
 uses uFrmCadastroBasico, uFrmCadastroUsuarios, uFuncoes, uFrmCadastroCaixa,
   uFrmCadastroPagar, uFrmCadastroReceber, uFrmConsPagar, uFrmConsReceber,
-  uFrmLogin, uFrmSplash, uFrmSaldoCaixa, uFrmEmitirRecibo;
+  uFrmLogin, uFrmSplash, uFrmSaldoCaixa, uFrmEmitirRecibo, uSQL;
 
 procedure TfrmPrincipal.BitBtn1Click(Sender: TObject);
 begin
